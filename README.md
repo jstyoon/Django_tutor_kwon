@@ -1,4 +1,4 @@
-# drf_week2 초기설정
+# drf_week2 start setting
 
 ---
 # cmd
