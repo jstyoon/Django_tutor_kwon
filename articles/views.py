@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from articles.models import Article
 from articles.serializers import ArticleSerializer
-
+from rest_framework.generics import get_object_or_404
 
 # Create your views here.
 
@@ -25,4 +25,7 @@ def index(request):
         
 @api_view(['GET','PUT','DELETE'])    
 def article_view(request, article_id):
-    return Response(article_id)
+    if request.method == 'GET':
+        article = get_object_or_404(Article, id=article_id)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)
