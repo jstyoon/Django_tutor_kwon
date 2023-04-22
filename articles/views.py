@@ -5,9 +5,9 @@ from articles.serializers import ArticleSerializer
 
 
 # Create your views here.
-@api_view(['GET', 'POST'])
+
+@api_view(['GET'])
 def index(request):
     articles = Article.objects.all()
-    article = articles[0]
-    serializer = ArticleSerializer(article)
-    return Response(serializer)
+    serializer = ArticleSerializer(articles, many=True)
+    return Response(serializer.data)
