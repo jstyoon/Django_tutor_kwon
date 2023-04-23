@@ -29,3 +29,9 @@ def article_view(request, article_id):
         article = get_object_or_404(Article, id=article_id)
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
+    elif request.method == 'PUT':
+        article = get_object_or_404(Article, id=article_id)
+        serializer = ArticleSerializer(article, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
