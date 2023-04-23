@@ -8,7 +8,7 @@ from rest_framework.generics import get_object_or_404
 # Create your views here.
 
 @api_view(['GET', 'POST'])
-def index(request):
+def articleAPI(request):
     if request.method == 'GET':
         articles = Article.objects.all()
         serializer = ArticleSerializer(articles, many=True)
@@ -24,7 +24,7 @@ def index(request):
         
         
 @api_view(['GET','PUT','DELETE'])    
-def article_view(request, article_id):
+def articleDetailAPI(request, article_id):
     if request.method == 'GET':
         article = get_object_or_404(Article, id=article_id)
         serializer = ArticleSerializer(article)
@@ -35,3 +35,7 @@ def article_view(request, article_id):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+    elif request.method == 'DELETE':
+        article = get_object_or_404(Article, id=article_id)
+        article.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
